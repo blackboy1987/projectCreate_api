@@ -9,7 +9,14 @@ import com.bootx.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Service - 基类
+ * 
+ * @author bootx Team
+ * @version 6.1
+ */
 public interface BaseService<T extends BaseEntity<ID>, ID extends Serializable> {
 
 	/**

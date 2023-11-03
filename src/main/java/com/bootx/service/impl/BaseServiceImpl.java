@@ -1,9 +1,4 @@
-/*
- * Copyright 2008-2018 shopxx.net. All rights reserved.
- * Support: localhost
- * License: localhost/license
- * FileId: ZTYSuRqzTwgFKPgSmDw5Wylrymfsc8TC
- */
+
 package com.bootx.service.impl;
 
 import com.bootx.common.Filter;
@@ -16,6 +11,8 @@ import com.bootx.service.BaseService;
 import jakarta.annotation.Resource;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -25,11 +22,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service - 基类
  * 
- * @author 好源++ Team
+ * @author bootx Team
  * @version 6.1
  */
 @Transactional
@@ -46,6 +44,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 	private BaseDao<T, ID> baseDao;
 
 	@Resource
+	protected JdbcTemplate jdbcTemplate;
+
+	@Autowired
 	protected void setBaseDao(BaseDao<T, ID> baseDao) {
 		this.baseDao = baseDao;
 	}
@@ -210,10 +211,13 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 			try {
 				Object sourceValue = readMethod.invoke(source);
 				writeMethod.invoke(target, sourceValue);
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} catch (IllegalArgumentException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} catch (InvocationTargetException e) {
 				throw new RuntimeException(e.getMessage(), e);
 			}
-        }
+		}
 	}
-
 }
