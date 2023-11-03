@@ -34,7 +34,7 @@ public class ProjectController extends BaseController {
 	 */
 	@PostMapping("/update")
 	public Result update(Project project) {
-		projectService.save(project);
+		projectService.update(project);
 		return Result.success();
 	}
 

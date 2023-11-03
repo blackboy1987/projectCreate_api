@@ -2,6 +2,7 @@ package com.bootx.entity;
 
 import com.bootx.util.FreeMarkerUtils;
 import com.bootx.util.SystemUtils;
+import com.fasterxml.jackson.annotation.JsonView;
 import freemarker.template.TemplateException;
 import jakarta.persistence.*;
 import org.dom4j.Document;
@@ -21,6 +22,7 @@ import java.util.Set;
 @Entity
 public class ProjectModule extends BaseEntity<Long>{
 
+    @JsonView({PageView.class})
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,6 +31,7 @@ public class ProjectModule extends BaseEntity<Long>{
     @OneToMany(mappedBy = "module",fetch = FetchType.LAZY)
     private Set<ProjectModuleItem> items = new HashSet<>();
 
+    @Transient
     private static String staticPath;
 
     public static String getStaticPath() {
