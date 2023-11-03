@@ -520,21 +520,24 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	/**
 	 * 查询实体对象数量
 	 * 
-	 * @param criteriaQuery
+	 * @param criteriaQuery1
 	 *            查询条件
 	 * @param filters
 	 *            筛选
 	 * @return 实体对象数量
 	 */
-	protected Long count(CriteriaQuery<T> criteriaQuery, List<Filter> filters) {
-		Assert.notNull(criteriaQuery, "[Assertion failed] - criteriaQuery is required; it must not be null");
-		Assert.notNull(criteriaQuery.getSelection(), "[Assertion failed] - criteriaQuery selection is required; it must not be null");
-		Assert.notEmpty(criteriaQuery.getRoots(), "[Assertion failed] - criteriaQuery roots must not be empty: it must contain at least 1 element");
+	protected Long count(CriteriaQuery<T> criteriaQuery1, List<Filter> filters) {
+		Assert.notNull(criteriaQuery1, "[Assertion failed] - criteriaQuery is required; it must not be null");
+		Assert.notNull(criteriaQuery1.getSelection(), "[Assertion failed] - criteriaQuery selection is required; it must not be null");
+		Assert.notEmpty(criteriaQuery1.getRoots(), "[Assertion failed] - criteriaQuery roots must not be empty: it must contain at least 1 element");
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		Root<T> root = findRoot(criteriaQuery, criteriaQuery.getResultType());
+		// Root<T> root = findRoot(criteriaQuery, criteriaQuery.getResultType());
+		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(criteriaQuery1.getResultType());
+		Root<T> root = criteriaQuery.from(criteriaQuery1.getResultType());
 
-		Predicate restrictions = criteriaQuery.getRestriction() != null ? criteriaQuery.getRestriction() : criteriaBuilder.conjunction();
+
+		Predicate restrictions = criteriaQuery.getRestriction() != null ? criteriaQuery1.getRestriction() : criteriaBuilder.conjunction();
 		restrictions = criteriaBuilder.and(restrictions, toPredicate(root, filters));
 		criteriaQuery.where(restrictions);
 
@@ -577,7 +580,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 		for (Root<?> root : criteriaQuery.getRoots()) {
 			if (clazz.equals(root.getJavaType())) {
-				return (Root<T>) root.as(clazz);
+				return (Root<T>) root;
 			}
 		}
 		return (Root<T>) criteriaQuery.getRoots().iterator().next();

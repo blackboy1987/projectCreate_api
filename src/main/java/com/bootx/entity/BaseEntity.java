@@ -11,6 +11,9 @@ import jakarta.validation.groups.Default;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author black
+ */
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class BaseEntity<ID extends Serializable> implements Serializable {
@@ -72,33 +75,33 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	/**
 	 * ID
 	 */
-	@JsonView(BaseView.class)
+	@JsonView({BaseView.class,ListView.class,ViewView.class,EditView.class,PageView.class,TreeView.class,IdView.class})
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tableGenerator")
-	@TableGenerator(name = "tableGenerator", table = "IdGenerator")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false,updatable = false,columnDefinition = "bigint comment '主键'")
 	private ID id;
 
 	/**
 	 * 创建日期
 	 */
-	@JsonView(BaseView.class)
+	@JsonView({ListView.class,BaseView.class,PageView.class})
 	@CreatedDate
-	@Column(nullable = false, updatable = false)
+	@Column(nullable = false, updatable = false,columnDefinition = "datetime comment '创建时间'")
 	private Date createdDate;
 
 	/**
 	 * 最后修改日期
 	 */
-	@JsonView(BaseView.class)
+	@JsonView({BaseView.class,PageView.class})
 	@LastModifiedDate
-	@Column(nullable = false)
+	@Column(nullable = false,columnDefinition = "datetime comment '最后一次修改时间'")
 	private Date lastModifiedDate;
 
 	/**
 	 * 版本
 	 */
 	@Version
-	@Column(nullable = false)
+	@Column(nullable = false,columnDefinition = "int comment '版本号'")
 	private Long version;
 
 	/**

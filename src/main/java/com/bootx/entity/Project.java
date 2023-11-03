@@ -1,5 +1,6 @@
 package com.bootx.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Entity
 public class Project extends BaseEntity<Long>{
 
+    @JsonView({PageView.class})
     private String name;
 
     @OneToMany(mappedBy = "project",fetch = FetchType.LAZY)

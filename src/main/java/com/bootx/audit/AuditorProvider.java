@@ -1,6 +1,9 @@
 
 package com.bootx.audit;
 
+/**
+ * @author black
+ */
 public interface AuditorProvider<T> {
 
 	/**

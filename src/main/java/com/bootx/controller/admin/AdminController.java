@@ -9,6 +9,9 @@ import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author black
+ */
 @RestController
 @RequestMapping("/admin/admin")
 public class AdminController extends BaseController {
