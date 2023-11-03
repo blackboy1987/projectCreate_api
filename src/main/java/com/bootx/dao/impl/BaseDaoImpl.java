@@ -8,26 +8,22 @@ import com.bootx.common.Pageable;
 import com.bootx.dao.BaseDao;
 import com.bootx.entity.BaseEntity;
 import com.bootx.entity.OrderedEntity;
+import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.*;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ResolvableType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Dao - 基类
- * 
- * @author 好源++ Team
- * @version 6.1
- */
 public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializable> implements BaseDao<T, ID> {
 
 	/**
@@ -52,6 +48,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	@PersistenceContext
 	protected EntityManager entityManager;
+
+	@Resource
+	protected JdbcTemplate jdbcTemplate;
 
 	/**
 	 * 构造方法
@@ -489,7 +488,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 			if (OrderedEntity.class.isAssignableFrom(entityClass)) {
 				orderList.add(criteriaBuilder.asc(getPath(root, OrderedEntity.ORDER_PROPERTY_NAME)));
 			} else {
-				orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.LAST_MODIFIED_DATE_PROPERTY_NAME)));
+				orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.CREATED_DATE_PROPERTY_NAME)));
 			}
 		}
 		criteriaQuery.orderBy(orderList);

@@ -11,6 +11,9 @@ import jakarta.persistence.LockModeType;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author blackboy
+ */
 public interface BaseDao<T extends BaseEntity<ID>, ID extends Serializable> {
 
 	/**
