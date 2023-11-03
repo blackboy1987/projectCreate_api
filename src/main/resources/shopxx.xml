@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shopxx>
+	<template id="articleContent" type="page" name="文章内容" templatePath="/content.ftlh" staticPath="/article/content/${createDate?string('yyyyMM')}/${pageNumber!1}.java" />
+</shopxx>
