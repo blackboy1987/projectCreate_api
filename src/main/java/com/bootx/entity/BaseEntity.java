@@ -56,6 +56,19 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 
 	}
 
+	public interface ListView {}
+
+	public interface PageView {}
+
+	public interface ViewView{}
+
+	public interface EditView{}
+
+	public interface TreeView{}
+
+	public interface IdView {}
+
+
 	/**
 	 * ID
 	 */
