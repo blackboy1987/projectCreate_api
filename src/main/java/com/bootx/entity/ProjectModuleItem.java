@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 
+import java.util.List;
+
 /**
  * @author black
  */
@@ -70,4 +72,5 @@ public class ProjectModuleItem extends BaseEntity<Long>{
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
+
 }

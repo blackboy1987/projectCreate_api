@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shopxx>
-	<template id="articleContent" type="page" name="文章内容" templatePath="/content.ftlh" staticPath="/article/content/${createDate?string('yyyyMM')}/${pageNumber!1}.java" />
+	<template id="entity" type="page" templatePath="/entity/content.ftlh" staticPath="/${modifyDate?string('yyyyMM')}/entity/${name}.java" />
+	<template id="dao" type="page" templatePath="/dao/content.ftlh" staticPath="/${modifyDate?string('yyyyMM')}/dao/${name}Dao.java" />
+	<template id="daoImpl" type="page" templatePath="/dao/impl/content.ftlh" staticPath="/${modifyDate?string('yyyyMM')}/dao/impl/${name}DaoImpl.java" />
+	<template id="service" type="page" templatePath="/service/content.ftlh" staticPath="/${modifyDate?string('yyyyMM')}/service/${name}Service.java" />
+	<template id="serviceImpl" type="page" templatePath="/service/impl/content.ftlh" staticPath="/${modifyDate?string('yyyyMM')}/service/impl/${name}ServiceImpl.java" />
+	<template id="controller" type="page" templatePath="/controller/content.ftlh" staticPath="/${modifyDate?string('yyyyMM')}/controller/${name}Controller.java" />
 </shopxx>

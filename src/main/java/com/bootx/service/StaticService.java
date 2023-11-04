@@ -12,5 +12,5 @@ public interface StaticService {
 
 	int build(String templatePath, String staticPath, Map<String, Object> model);
 
-	int build(ProjectModule projectModule);
+	String build(ProjectModule projectModule);
 }

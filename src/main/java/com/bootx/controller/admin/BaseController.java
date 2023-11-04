@@ -9,6 +9,7 @@ package com.bootx.controller.admin;
 import jakarta.annotation.Resource;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -32,6 +33,9 @@ public class BaseController {
 
 	@Resource
 	private Validator validator;
+
+	@Resource
+	protected JdbcTemplate jdbcTemplate;
 
 	/**
 	 * 数据验证
