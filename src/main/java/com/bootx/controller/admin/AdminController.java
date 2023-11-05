@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author black
  */
 @RestController
-@RequestMapping("/admin/admin")
+@RequestMapping("/api/admin/admin")
 public class AdminController extends BaseController {
 
 	@Resource

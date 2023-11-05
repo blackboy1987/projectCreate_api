@@ -6,10 +6,21 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
+/**
+ * @author black
+ */
 @Entity
-public class Admin extends BaseEntity<Long> {
+public class Admin extends User {
+
+    /**
+     * "登录失败尝试次数"缓存名称
+     */
+    public static final String FAILED_LOGIN_ATTEMPTS_CACHE_NAME = "failedLoginAttempts";
+
+
     /**
      * 用户名
      */
@@ -94,4 +105,12 @@ public class Admin extends BaseEntity<Long> {
         this.encodedPassword = encodedPassword;
     }
 
+
+
+
+    @Transient
+    @Override
+    public boolean isValidCredentials(Object credentials) {
+        return credentials != null && StringUtils.equals(DigestUtils.md5Hex(credentials instanceof char[] ? String.valueOf((char[]) credentials) : String.valueOf(credentials)), getEncodedPassword());
+    }
 }

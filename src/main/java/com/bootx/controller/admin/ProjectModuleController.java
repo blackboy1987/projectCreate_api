@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -118,12 +119,7 @@ public class ProjectModuleController extends BaseController {
 		File file = new File(SystemUtils.getJavaIoTmpDir()+"/"+uuid+"/"+now);
 		File[] fileList = file.listFiles();
 		CompressUtils.archive(fileList,destFile,"zip");
-		System.out.println(destFile.getAbsolutePath());
-		return ResponseEntity
-				.ok()
-				.headers(headers)
-				.contentLength(destFile.length())
-				.contentType(MediaType.parseMediaType("application/octet-stream"))
-				.body(new InputStreamResource(FileUtils.openInputStream(destFile)));
+		FileInputStream fileInputStream = FileUtils.openInputStream(destFile);
+		return ResponseEntity.ok().headers(headers).contentLength(destFile.length()).contentType(MediaType.parseMediaType("application/octet-stream")).body(new InputStreamResource(fileInputStream));
 	}
 }

@@ -3,12 +3,6 @@ package com.bootx.service;
 
 import com.bootx.entity.Admin;
 
-/**
- * Service - 管理员
- * 
- * @author 好源++ Team
- * @version 6.1
- */
 public interface AdminService extends BaseService<Admin, Long> {
 
 	/**
@@ -30,4 +24,9 @@ public interface AdminService extends BaseService<Admin, Long> {
 	Admin findByUsername(String username);
 
 
+	Admin getCurrent();
+
+	void lock(Admin admin);
+
+	void unLock(Admin admin);
 }

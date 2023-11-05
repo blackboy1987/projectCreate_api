@@ -8,6 +8,7 @@ import com.bootx.common.Pageable;
 import com.bootx.dao.BaseDao;
 import com.bootx.entity.BaseEntity;
 import com.bootx.service.BaseService;
+import com.bootx.service.RedisService;
 import jakarta.annotation.Resource;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -44,6 +45,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 
 	@Resource
 	protected JdbcTemplate jdbcTemplate;
+
+	@Resource
+	protected RedisService redisService;
 
 	@Autowired
 	protected void setBaseDao(BaseDao<T, ID> baseDao) {
