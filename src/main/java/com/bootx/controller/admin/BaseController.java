@@ -6,6 +6,7 @@
  */
 package com.bootx.controller.admin;
 
+import com.bootx.service.AdminService;
 import com.bootx.service.RedisService;
 import jakarta.annotation.Resource;
 import jakarta.validation.ConstraintViolation;
@@ -40,6 +41,9 @@ public class BaseController {
 
 	@Resource
 	protected RedisService redisService;
+
+	@Resource
+	protected AdminService adminService;
 
 	/**
 	 * 数据验证

@@ -2,6 +2,7 @@ package com.bootx.config;
 
 import com.bootx.entity.Admin;
 import com.bootx.interceptor.CorsInterceptor;
+import com.bootx.interceptor.OptLogInterceptor;
 import com.bootx.security.CurrentUserHandlerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,10 @@ public class WebConfig implements WebMvcConfigurer {
     public CorsInterceptor corsInterceptor() {
         return new CorsInterceptor();
     }
+    @Bean
+    public OptLogInterceptor optLogInterceptor() {
+        return new OptLogInterceptor();
+    }
 
     @Bean
     public CurrentUserHandlerInterceptor currentUserHandlerInterceptor() {
@@ -32,5 +37,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**");
         registry.addInterceptor(currentUserHandlerInterceptor())
                 .addPathPatterns("/**");
+        registry.addInterceptor(optLogInterceptor())
+                .addPathPatterns("/api/**");
     }
 }
