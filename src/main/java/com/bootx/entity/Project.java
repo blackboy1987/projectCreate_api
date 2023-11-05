@@ -1,9 +1,8 @@
 package com.bootx.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +27,11 @@ public class Project extends BaseEntity<Long>{
 
     @OneToMany(mappedBy = "project",fetch = FetchType.LAZY)
     private Set<ProjectModule> modules = new HashSet<>();
+
+    @NotNull
+    @JoinColumn(nullable = false,updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Admin admin;
 
     public String getName() {
         return name;
@@ -59,5 +63,22 @@ public class Project extends BaseEntity<Long>{
 
     public void setPackageName(String packageName) {
         this.packageName = packageName;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    @Transient
+    @JsonView({PageView.class})
+    public String getCreator(){
+        if(admin!=null){
+            return admin.getUsername();
+        }
+        return null;
     }
 }
