@@ -4,9 +4,11 @@ package com.bootx.controller.admin;
 import com.bootx.audit.Audit;
 import com.bootx.common.Pageable;
 import com.bootx.common.Result;
+import com.bootx.entity.Admin;
 import com.bootx.entity.BaseEntity;
 import com.bootx.entity.ProjectModule;
 import com.bootx.entity.ProjectModuleItem;
+import com.bootx.security.CurrentUser;
 import com.bootx.service.ProjectModuleItemService;
 import com.bootx.service.ProjectModuleService;
 import com.bootx.service.ProjectService;
@@ -128,5 +130,18 @@ public class ProjectModuleController extends BaseController {
 		CompressUtils.archive(fileList,destFile,"zip");
 		FileInputStream fileInputStream = FileUtils.openInputStream(destFile);
 		return ResponseEntity.ok().headers(headers).contentLength(destFile.length()).contentType(MediaType.parseMediaType("application/octet-stream")).body(new InputStreamResource(fileInputStream));
+	}
+
+	@PostMapping("/itemsRemove")
+	@Audit(action = "模块属性删除")
+	public Result itemsRemove(Long projectModuleId, Long id, @CurrentUser Admin admin) {
+		ProjectModule projectModule = projectModuleService.find(projectModuleId);
+		ProjectModuleItem projectModuleItem = projectModuleItemService.find(id);
+		if(projectModule==null || projectModuleItem==null || projectModule.getProject().getAdmin()!=admin||projectModuleItem.getModule()!=projectModule){
+			return Result.error("属性不存在！");
+		}
+		projectModuleItemService.delete(id);
+		return Result.success();
+
 	}
 }
