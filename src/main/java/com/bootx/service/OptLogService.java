@@ -1,6 +1,8 @@
 
 package com.bootx.service;
 
+import com.bootx.common.Page;
+import com.bootx.common.Pageable;
 import com.bootx.entity.OptLog;
 
 public interface OptLogService extends BaseService<OptLog, Long> {
@@ -18,4 +20,5 @@ public interface OptLogService extends BaseService<OptLog, Long> {
 	 */
 	void clear();
 
+	Page<OptLog> findPage(Pageable pageable, String action, String username, String requestUrl);
 }

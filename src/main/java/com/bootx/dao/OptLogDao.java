@@ -2,8 +2,13 @@
 package com.bootx.dao;
 
 
+import com.bootx.common.Page;
+import com.bootx.common.Pageable;
 import com.bootx.entity.OptLog;
 
+/**
+ * @author black
+ */
 public interface OptLogDao extends BaseDao<OptLog, Long> {
 
 	/**
@@ -11,4 +16,5 @@ public interface OptLogDao extends BaseDao<OptLog, Long> {
 	 */
 	void removeAll();
 
+    Page<OptLog> findPage(Pageable pageable, String action, String username, String requestUrl);
 }

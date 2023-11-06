@@ -29,6 +29,7 @@ public class ProjectController extends BaseController {
 	 * 保存
 	 */
 	@PostMapping("/save")
+	@Audit(action = "项目新增")
 	public Result save(Project project) {
 		project.setAdmin(adminService.getCurrent());
 		projectService.save(project);
@@ -39,6 +40,7 @@ public class ProjectController extends BaseController {
 	 * 更新
 	 */
 	@PostMapping("/update")
+	@Audit(action = "项目更新")
 	public Result update(Project project) {
 		Project parent = projectService.find(project.getId());
 		Admin current = adminService.getCurrent();
@@ -63,6 +65,7 @@ public class ProjectController extends BaseController {
 	 * 删除
 	 */
 	@PostMapping("/delete")
+	@Audit(action = "项目删除")
 	public Result delete(Long[] ids) {
 		for (Long id: ids){
 			Project project = projectService.find(id);

@@ -1,6 +1,7 @@
 
 package com.bootx.controller.admin;
 
+import com.bootx.audit.Audit;
 import com.bootx.common.Pageable;
 import com.bootx.common.Result;
 import com.bootx.entity.BaseEntity;
@@ -50,6 +51,7 @@ public class ProjectModuleController extends BaseController {
 	 * 保存
 	 */
 	@PostMapping("/save")
+	@Audit(action = "模块保存")
 	public Result save(ProjectModule projectModule,Long projectId) {
 		projectModule.setProject(projectService.find(projectId));
 		projectModuleService.save(projectModule);
@@ -60,6 +62,7 @@ public class ProjectModuleController extends BaseController {
 	 * 更新
 	 */
 	@PostMapping("/update")
+	@Audit(action = "模块更新")
 	public Result update(ProjectModule projectModule,Long projectId) {
 		projectModule.setProject(projectService.find(projectId));
 		projectModuleService.update(projectModule);
@@ -70,6 +73,7 @@ public class ProjectModuleController extends BaseController {
 	 * 列表
 	 */
 	@PostMapping("/list")
+	@Audit(action = "模块查询")
 	@JsonView(BaseEntity.PageView.class)
 	public Result list(Pageable pageable,Long projectId) {
 		return Result.success(projectModuleService.findPage(pageable,projectService.find(projectId)));
@@ -79,6 +83,7 @@ public class ProjectModuleController extends BaseController {
 	 * 删除
 	 */
 	@PostMapping("/delete")
+	@Audit(action = "模块删除")
 	public Result delete(Long[] ids) {
 		projectModuleService.delete(ids);
 		return Result.success();
@@ -90,6 +95,7 @@ public class ProjectModuleController extends BaseController {
 	}
 
 	@PostMapping("/itemsSave")
+	@Audit(action = "模块属性保存")
 	public Result itemsSave(Long projectModuleId,ProjectModuleItem projectModuleItem) {
 		ProjectModule projectModule = projectModuleService.find(projectModuleId);
 		projectModuleItem.setModule(projectModule);
@@ -104,6 +110,7 @@ public class ProjectModuleController extends BaseController {
 
 
 	@PostMapping("/build")
+	@Audit(action = "模块构建")
 	public ResponseEntity<InputStreamResource> build(Long id) throws IOException {
 		ProjectModule projectModule = projectModuleService.find(id);
 

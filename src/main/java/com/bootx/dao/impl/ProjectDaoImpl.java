@@ -21,6 +21,9 @@ public class ProjectDaoImpl extends BaseDaoImpl<Project, Long> implements Projec
 
     @Override
     public Page<Project> findPage(Pageable pageable, Admin admin,String name) {
+        if(admin==null){
+            return Page.emptyPage(pageable);
+        }
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Project> criteriaQuery = criteriaBuilder.createQuery(Project.class);
         Root<Project> root = criteriaQuery.from(Project.class);

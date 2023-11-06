@@ -1,5 +1,7 @@
 package com.bootx.service.impl;
 
+import com.bootx.common.Page;
+import com.bootx.common.Pageable;
 import com.bootx.dao.OptLogDao;
 import com.bootx.entity.OptLog;
 import com.bootx.service.OptLogService;
@@ -22,6 +24,11 @@ public class OptLogServiceImpl extends BaseServiceImpl<OptLog, Long> implements 
 	@Override
 	public void clear() {
 		auditLogDao.removeAll();
+	}
+
+	@Override
+	public Page<OptLog> findPage(Pageable pageable, String action, String username, String requestUrl) {
+		return auditLogDao.findPage(pageable,action,username,requestUrl);
 	}
 
 }

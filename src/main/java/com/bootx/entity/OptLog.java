@@ -2,6 +2,7 @@
 package com.bootx.entity;
 
 import com.bootx.common.BaseAttributeConverter;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 
 import java.util.Map;
@@ -18,24 +19,28 @@ public class OptLog extends BaseEntity<Long> {
 	 * 动作
 	 */
 	@Column(nullable = false, updatable = false)
+	@JsonView({PageView.class})
 	private String action;
 
 	/**
 	 * 详情
 	 */
 	@Column(updatable = false)
+	@JsonView({PageView.class})
 	private String detail;
 
 	/**
 	 * IP
 	 */
 	@Column(nullable = false, updatable = false)
+	@JsonView({PageView.class})
 	private String ip;
 
 	/**
 	 * 请求URL
 	 */
 	@Column(nullable = false, updatable = false)
+	@JsonView({PageView.class})
 	private String requestUrl;
 
 	/**
@@ -43,6 +48,7 @@ public class OptLog extends BaseEntity<Long> {
 	 */
 	@Column(updatable = false, length = 4000)
 	@Convert(converter = ParameterConverter.class)
+	@JsonView({PageView.class})
 	private Map<String, String[]> parameters;
 
 	/**
@@ -175,4 +181,12 @@ public class OptLog extends BaseEntity<Long> {
 	public static class ParameterConverter extends BaseAttributeConverter<Map<String, String[]>> {
 	}
 
+	@Transient
+	@JsonView({PageView.class})
+	public String getUsername(){
+		if(admin!=null){
+			return admin.getUsername();
+		}
+		return null;
+	}
 }
