@@ -55,7 +55,7 @@ public class ProjectController extends BaseController {
 	@PostMapping("/list")
 	@Audit(action = "项目查询")
 	@JsonView(BaseEntity.PageView.class)
-	public Result list(Pageable pageable,String name) {
+	public Result list(Pageable pageable,String name,@CurrentUser Admin admin) {
 		return Result.success(projectService.findPage(pageable,adminService.getCurrent(),name));
 	}
 
